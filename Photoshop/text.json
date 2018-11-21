@@ -1,0 +1,14 @@
+{
+    "position": {
+        "x": 280.0,
+        "y": 160.0,
+        "z": 0.0
+    },
+    "color": {
+        "r": 255.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+    },
+    "text": "This is a text created by a json script."
+}
