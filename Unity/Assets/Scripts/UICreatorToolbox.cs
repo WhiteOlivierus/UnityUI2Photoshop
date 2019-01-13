@@ -3,21 +3,24 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 
-public enum UIelement {
+public enum UIelement
+{
     Text = 0,
     Button = 1,
     Image = 2,
     Background = 3
 }
 
-public enum FontStyle {
+public enum FontStyle
+{
     Normal = 0,
     Bold = 1,
     Italic = 2,
     BoldAndItalic = 3
 }
 
-public class UICreatorToolbox : EditorWindow {
+public class UICreatorToolbox : EditorWindow
+{
 
     public UIelement elem;
 
@@ -31,7 +34,8 @@ public class UICreatorToolbox : EditorWindow {
     Font txtFont;
     Sprite sprite, btnSprite, bgSprite;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         txtFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
         btnSprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
         txtSize = 14;
@@ -44,13 +48,15 @@ public class UICreatorToolbox : EditorWindow {
     }
 
     [MenuItem("UI Creator/UI Creator Toolbox")]
-    static void Init() {
+    static void Init()
+    {
         EditorWindow window = GetWindow(typeof(UICreatorToolbox), false, "UI Creator");
         window.position = new Rect(50, 50, 300, 500);
         window.Show();
     }
 
-    private void OnGUI() {
+    private void OnGUI()
+    {
 
         GUILayout.Label("Unity UI Creator Toolbox", EditorStyles.boldLabel);
         GUILayout.Label("Select the UI element you wish to add:");
@@ -58,7 +64,8 @@ public class UICreatorToolbox : EditorWindow {
         elem = (UIelement)EditorGUILayout.EnumPopup(elem);
         GUILayout.Label("Style Properties", EditorStyles.miniBoldLabel);
 
-        switch (elem) {
+        switch (elem)
+        {
             case UIelement.Text:
                 GUILayout.Label("Text:");
                 txt = EditorGUILayout.TextArea(txt, GUILayout.Height(50));
@@ -105,17 +112,21 @@ public class UICreatorToolbox : EditorWindow {
         pos = EditorGUILayout.Vector2Field("Position: ", pos);
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Add UI element", GUILayout.Height(30))) {
+        if (GUILayout.Button("Add UI element", GUILayout.Height(30)))
+        {
             CreateComponent(elem);
+            UIParser.getUI();
         }
     }
 
-    private void CreateComponent(UIelement elem) {
+    private void CreateComponent(UIelement elem)
+    {
 
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
 
         // If the canvas does not exist, create one. No duplicates.
-        if (canvas == null) {
+        if (canvas == null)
+        {
             GameObject newCanvas = new GameObject("Canvas");
             Canvas c = newCanvas.AddComponent<Canvas>();
             canvas = c;
@@ -125,7 +136,8 @@ public class UICreatorToolbox : EditorWindow {
             newCanvas.AddComponent<GraphicRaycaster>();
         }
 
-        switch (elem) {
+        switch (elem)
+        {
             case UIelement.Text:
                 GameObject newText = new GameObject("Text");
                 newText.transform.SetParent(canvas.transform, false);
@@ -138,7 +150,8 @@ public class UICreatorToolbox : EditorWindow {
                 t.rectTransform.anchoredPosition = pos;
                 t.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
                 t.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-                switch (txtStyle) {
+                switch (txtStyle)
+                {
                     case FontStyle.Normal:
                         t.fontStyle = UnityEngine.FontStyle.Normal;
                         break;

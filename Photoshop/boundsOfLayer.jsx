@@ -1,3 +1,5 @@
+//Credits: the whole dealing with masks script is from Flatten All Masks.jsx by LeZuse
+
 function getBounds(layer) {
     var mflayer = layer;
     var mfDoc = activeDocument;
